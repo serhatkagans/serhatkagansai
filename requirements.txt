@@ -1,1 +1,1 @@
-matplotlib==38.4
+matplotlib
