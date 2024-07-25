@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 
-st.title('TV Reklam ve Satış Tahmin Uygulaması')
+st.title('Basit doğrusal regresyon ile TV Reklam ve Satış Tahmin Uygulaması')
 
 # Dosya yolunu belirleyin
 file_path = os.path.join(os.path.dirname(__file__), 'reklam.csv')
