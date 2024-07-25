@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import numpy as np
 import pandas as pd
@@ -7,36 +8,43 @@ from sklearn.linear_model import LinearRegression
 
 st.title('TV Reklam ve Satış Tahmin Uygulaması')
 
-# CSV dosyasını yükleyin
-data = pd.read_csv("reklam.csv")
+# Dosya yolunu belirleyin
+file_path = os.path.join(os.path.dirname(__file__), 'reklam.csv')
 
-st.write("Veri Seti İlk 5 Satır")
-st.write(data.head())
+# Dosya yolunu kontrol edin
+if not os.path.exists(file_path):
+    st.error(f"Dosya bulunamadı: {file_path}")
+else:
+    # CSV dosyasını yükleyin
+    data = pd.read_csv(file_path)
 
-# Veriyi hazırlayın
-x = data.TV.values.reshape(-1, 1)
-y = data.satış.values.reshape(-1, 1)
+    st.write("Veri Seti İlk 5 Satır")
+    st.write(data.head())
 
-# Veriyi eğitim ve test olarak ayırın
-xtrain, xtest, ytrain, ytest = train_test_split(x, y, test_size=0.3)
+    # Veriyi hazırlayın
+    x = data.TV.values.reshape(-1, 1)
+    y = data.satış.values.reshape(-1, 1)
 
-# Modeli eğitin
-lr = LinearRegression()
-lr.fit(xtrain, ytrain)
+    # Veriyi eğitim ve test olarak ayırın
+    xtrain, xtest, ytrain, ytest = train_test_split(x, y, test_size=0.3)
 
-# Tahmin yapın
-yhead = lr.predict(xtest)
+    # Modeli eğitin
+    lr = LinearRegression()
+    lr.fit(xtrain, ytrain)
 
-# Scatter plot ve tahmin çizgisi oluşturun
-fig, ax = plt.subplots()
-ax.scatter(x, y, label='Gerçek Veriler')
-ax.plot(xtest, yhead, color='red', label='Model Tahminleri')
-ax.set_xlabel("TV Reklam")
-ax.set_ylabel("Satış")
-ax.legend()
-st.pyplot(fig)
+    # Tahmin yapın
+    yhead = lr.predict(xtest)
 
-# Slider ile TV reklam bütçesi girişi
-budget = st.slider('TV Reklam Bütçesi Girin:', min_value=0, max_value=300, value=100)
-prediction = lr.predict([[budget]])
-st.write(f"{budget} birim TV reklam bütçesi ile beklenen satış: {prediction[0][0]:.2f}")
+    # Scatter plot ve tahmin çizgisi oluşturun
+    fig, ax = plt.subplots()
+    ax.scatter(x, y, label='Gerçek Veriler')
+    ax.plot(xtest, yhead, color='red', label='Model Tahminleri')
+    ax.set_xlabel("TV Reklam")
+    ax.set_ylabel("Satış")
+    ax.legend()
+    st.pyplot(fig)
+
+    # Slider ile TV reklam bütçesi girişi
+    budget = st.slider('TV Reklam Bütçesi Girin:', min_value=0, max_value=300, value=100)
+    prediction = lr.predict([[budget]])
+    st.write(f"{budget} birim TV reklam bütçesi ile beklenen satış: {prediction[0][0]:.2f}")
