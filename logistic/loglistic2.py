@@ -100,9 +100,4 @@ tahmin = loaded_model.predict(ozellikler_olceklendirilmis)
 st.subheader('Tahmin Edilen Teşhis Durumu:')
 st.write('Kötü Huylu' if tahmin[0] == 1 else 'İyi Huylu')
 
-# SHAP değerlerini hesapla ve göster
-explainer = shap.KernelExplainer(loaded_model.predict, ozellikler_olceklendirilmis)
-shap_values = explainer.shap_values(ozellikler_olceklendirilmis)
 
-st.header("SHAP Değerleri")
-shap.summary_plot(shap_values, input_df, plot_type="bar")
