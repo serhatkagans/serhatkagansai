@@ -7,8 +7,10 @@ import matplotlib.pyplot as plt
 # Başlık
 st.title("Rakam Tanıma Uygulaması")
 
+model_path = os.path.join(os.path.dirname(__file__), 'model.pkl')
+
 # Modeli ve scaler'ı yükle
-with open('model.pkl', 'rb') as file:
+with open('model_path', 'rb') as file:
     loaded_model = pickle.load(file)
 
 # Kullanıcıdan resim yüklemesi iste
