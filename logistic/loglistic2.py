@@ -1,15 +1,20 @@
 import streamlit as st
 import pickle
 import pandas as pd
+import os
 
 # Başlık
 st.title("Göğüs Kanseri Teşhis Uygulaması")
 
+# Dosya yollarını dinamik olarak oluştur
+scaler_path = os.path.join(os.path.dirname(__file__), 'scaler.pkl')
+model_path = os.path.join(os.path.dirname(__file__), 'model.pkl')
+
 # Model ve scaler dosyalarını yükle
-with open("scaler.pkl", "rb") as file:
+with open(scaler_path, "rb") as file:
     loaded_scaler = pickle.load(file)
 
-with open("model.pkl", "rb") as file:
+with open(model_path, "rb") as file:
     loaded_model = pickle.load(file)
 
 # Kullanıcıdan manuel olarak özellik değerlerini al
@@ -93,3 +98,10 @@ tahmin = loaded_model.predict(ozellikler_olceklendirilmis)
 # Sonuçları göster
 st.subheader('Tahmin Edilen Teşhis Durumu:')
 st.write('Kötü Huylu' if tahmin[0] == 1 else 'İyi Huylu')
+
+# SHAP değerlerini hesapla ve göster
+explainer = shap.Explainer(loaded_model)
+shap_values = explainer(ozellikler_olceklendirilmis)
+
+st.header("SHAP Değerleri")
+shap.summary_plot(shap_values, input_df, plot_type="bar")
