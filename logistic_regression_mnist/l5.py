@@ -31,11 +31,5 @@ if uploaded_file is not None:
     # Tahmin yap
     pred = loaded_model.predict(img_array)
     st.write(f"Tahmin edilen rakam: {pred[0]}")
-
-    # İsteğe bağlı olarak görüntüyü gösterme
-    fig, ax = plt.subplots()
-    ax.imshow(img_array.reshape(28, 28), cmap='gray')
-    ax.set_title(f"Tahmin edilen rakam: {pred[0]}")
-    st.pyplot(fig)
 else:
     st.write("Lütfen bir resim yükleyin.")
