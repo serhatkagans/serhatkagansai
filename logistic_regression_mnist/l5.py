@@ -3,14 +3,16 @@ import pickle
 from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 
 # Başlık
 st.title("Rakam Tanıma Uygulaması")
 
+# Dosya yolunu belirle
 model_path = os.path.join(os.path.dirname(__file__), 'model.pkl')
 
-# Modeli ve scaler'ı yükle
-with open('model_path', 'rb') as file:
+# Modeli yükle
+with open(model_path, 'rb') as file:
     loaded_model = pickle.load(file)
 
 # Kullanıcıdan resim yüklemesi iste
@@ -22,7 +24,7 @@ if uploaded_file is not None:
     st.image(img, caption='Yüklenen Resim', use_column_width=True)
 
     # Resmi işleme
-    img = img.resize((28,28))
+    img = img.resize((28, 28))
     img = img.convert("L")
     img_array = np.array(img).reshape(1, -1)
 
@@ -30,6 +32,10 @@ if uploaded_file is not None:
     pred = loaded_model.predict(img_array)
     st.write(f"Tahmin edilen rakam: {pred[0]}")
 
-
+    # İsteğe bağlı olarak görüntüyü gösterme
+    fig, ax = plt.subplots()
+    ax.imshow(img_array.reshape(28, 28), cmap='gray')
+    ax.set_title(f"Tahmin edilen rakam: {pred[0]}")
+    st.pyplot(fig)
 else:
     st.write("Lütfen bir resim yükleyin.")
