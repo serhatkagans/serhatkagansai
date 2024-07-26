@@ -2,6 +2,7 @@ import streamlit as st
 import pickle
 import pandas as pd
 import os
+import shap
 
 # Başlık
 st.title("Göğüs Kanseri Teşhis Uygulaması")
@@ -100,8 +101,8 @@ st.subheader('Tahmin Edilen Teşhis Durumu:')
 st.write('Kötü Huylu' if tahmin[0] == 1 else 'İyi Huylu')
 
 # SHAP değerlerini hesapla ve göster
-explainer = shap.Explainer(loaded_model)
-shap_values = explainer(ozellikler_olceklendirilmis)
+explainer = shap.KernelExplainer(loaded_model.predict, ozellikler_olceklendirilmis)
+shap_values = explainer.shap_values(ozellikler_olceklendirilmis)
 
 st.header("SHAP Değerleri")
 shap.summary_plot(shap_values, input_df, plot_type="bar")
