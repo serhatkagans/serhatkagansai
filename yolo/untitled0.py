@@ -4,18 +4,18 @@ from ultralytics import YOLO
 import numpy as np
 import os
 
-# Modeli yükle
+
 model_path = os.path.join(os.path.dirname(__file__), 'yolov8n.pt')
 model = YOLO(model_path)
 
-# Görüntü yükleme
+
 uploaded_file = st.file_uploader("Bir görüntü yükleyin", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
     file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
     img = cv2.imdecode(file_bytes, 1)
 
-    # Model ile nesne tespiti
+
     results = model(img)[0]
     threshold = 0.5
 
