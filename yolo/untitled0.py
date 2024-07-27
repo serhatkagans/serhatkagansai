@@ -4,14 +4,6 @@ from ultralytics import YOLO
 import numpy as np
 import os
 
-# Ortam kontrolü
-import sys
-st.write("Python executable being used:")
-st.write(sys.executable)
-
-st.write("Python path being used:")
-st.write(sys.path)
-
 # Modeli yükle
 model_path = os.path.join(os.path.dirname(__file__), 'yolov8n.pt')
 model = YOLO(model_path)
