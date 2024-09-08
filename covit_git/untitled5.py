@@ -9,7 +9,7 @@ clf_loaded = joblib.load(model_path)
 print("Model yüklendi.")
 
 # Yeni bir resimle tahmin yapma
-test = "deneme/resim1.png"
+"""test = "deneme/resim1.png"
 goruntu_oku1 = img.open(test).convert("L")
 goruntu_boyutlandirma1 = goruntu_oku1.resize((28, 28))
 goruntu_donusturme1 = np.array(goruntu_boyutlandirma1).flatten()
@@ -23,7 +23,7 @@ if tahmin == [0]:
     print("covidli")
 else:
     print("covid değil")
-    
+"""
 #%%
 import streamlit as st
 st.title("COVID Görüntü Tanıma Uygulaması")
