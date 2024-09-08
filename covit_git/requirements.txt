@@ -1,5 +1,4 @@
 streamlit
-pandas
 scikit-learn
-shap
-matplotlib
+Pillow
+joblib
