@@ -8,22 +8,6 @@ model_path = os.path.join(os.path.dirname(__file__), 'covid_model.pkl')
 clf_loaded = joblib.load(model_path)
 print("Model yüklendi.")
 
-# Yeni bir resimle tahmin yapma
-"""test = "deneme/resim1.png"
-goruntu_oku1 = img.open(test).convert("L")
-goruntu_boyutlandirma1 = goruntu_oku1.resize((28, 28))
-goruntu_donusturme1 = np.array(goruntu_boyutlandirma1).flatten()
-goruntu_donusturme1 = np.reshape(goruntu_donusturme1, (1, -1))
-
-tahmin = clf_loaded.predict(goruntu_donusturme1)
-
-print("Tahmin edilen sınıf:", tahmin)
-
-if tahmin == [0]:
-    print("covidli")
-else:
-    print("covid değil")
-"""
 #%%
 import streamlit as st
 st.title("COVID Görüntü Tanıma Uygulaması")
